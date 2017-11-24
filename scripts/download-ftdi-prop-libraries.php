@@ -7,7 +7,7 @@ $page_url   = 'http://www.ftdichip.com/Drivers/D2XX.htm';
 $url_prefix = 'http://www.ftdichip.com/Drivers/';
 
 $tempDir      = "<cwd>/lib-temp/prop";
-$versionsPath = "<cwd>/java/resources/lib/versions";
+$versionsPath = "<cwd>/core/resources/lib/versions";
 
 $download32 = FALSE;
 

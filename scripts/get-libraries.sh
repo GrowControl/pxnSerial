@@ -14,7 +14,7 @@ fi
 
 LIB_TEMP_PATH="$CWD/lib-temp"
 NATIVE_SOURCE_PATH="$CWD/native"
-JAVA_RESOURCES_PATH="$CWD/java/resources/lib"
+JAVA_RESOURCES_PATH="$CWD/core/resources/lib"
 
 DL_PROP_SCRIPT_PATH="$CWD/scripts/download-ftdi-prop-libraries.php"
 
