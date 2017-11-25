@@ -1,0 +1,92 @@
+<!-- Generated on: June 8, 2017 06:01 UTC -->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                             http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<name>pxnSerial-native-linux64</name>
+	<artifactId>pxnserial-linux64</artifactId>
+	<groupId>com.poixson.serial</groupId>
+	<version>1.0.0</version>
+	<packaging>so</packaging>
+	<url>http://poixson.com</url>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+		<maven-resources-plugin-version>3.0.2</maven-resources-plugin-version>
+		<native-maven-plugin-version>1.0-alpha-8</native-maven-plugin-version>
+
+	</properties>
+	<profiles>
+		<profile>
+			<id>with-linux64</id>
+			<activation>
+				<os>
+					<family>unix</family>
+					<name>linux</name>
+					<arch>amd64</arch>
+				</os>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>native-maven-plugin</artifactId>
+						<version>${native-maven-plugin-version}</version>
+						<extensions>true</extensions>
+						<configuration>
+							<javahOS>linux</javahOS>
+							<compilerStartOptions>
+								<compilerStartOption>-shared</compilerStartOption>
+								<compilerStartOption>-m64</compilerStartOption>
+								<compilerStartOption>-fPIC</compilerStartOption>
+							</compilerStartOptions>
+							<linkerStartOptions>
+								<linkerStartOption>-shared</linkerStartOption>
+								<linkerStartOption>-m64</linkerStartOption>
+								<linkerStartOption>-L ${project.basedir}/../../core/resources/lib/linux64/</linkerStartOption>
+								<!-- libftdi-linux64.so -->
+								<linkerStartOption>-l ftdi-open-linux64</linkerStartOption>
+								<!-- libftd2xx.so -->
+								<linkerStartOption>-l ftdi-prop-linux64</linkerStartOption>
+							</linkerStartOptions>
+							<sources>
+								<source>
+									<directory>${project.basedir}/../</directory>
+									<fileNames>
+										<fileName>pxnSerial.c</fileName>
+									</fileNames>
+								</source>
+							</sources>
+						</configuration>
+					</plugin>
+					<plugin>
+						<artifactId>maven-resources-plugin</artifactId>
+						<version>${maven-resources-plugin-version}</version>
+						<executions>
+							<execution>
+								<id>copy-resources</id>
+								<phase>package</phase>
+								<goals>
+									<goal>copy-resources</goal>
+								</goals>
+								<configuration>
+									<outputDirectory>${project.basedir}/../../core/resources/lib/linux64/</outputDirectory>
+									<resources>
+										<resource>
+											<directory>${project.basedir}/target/</directory>
+											<filtering>false</filtering>
+											<includes>
+												<include>pxnserial-linux64.so</include>
+											</includes>
+										</resource>
+									</resources>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+</project>
