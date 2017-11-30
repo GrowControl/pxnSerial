@@ -18,22 +18,22 @@ public class NativeSerial implements DeviceNative {
 	public native byte[] getDeviceList();
 
 	@Override
-	public native long openPort(String portName);
+	public native int openPort(String portName);
 	@Override
-	public native boolean closePort(long handle);
+	public native boolean closePort(int handle);
 
 	@Override
-	public native long setParams(long handle, int baud, int byteSize, int stopBits, int parity, int flags);
+	public native int setParams(int handle, int baud, int byteSize, int stopBits, int parity, int flags);
 
 	@Override
-	public native boolean[] getLineStatus(long handle);
+	public native boolean[] getLineStatus(int handle);
 	@Override
-	public native long setLineStatus(long handle, boolean setRTS, boolean setDTR);
+	public native int setLineStatus(int handle, boolean setRTS, boolean setDTR);
 
 	@Override
-	public native int readBytes(long handle, byte[] bytes, int len);
+	public native int readBytes(int handle, byte[] bytes, int len);
 	@Override
-	public native long writeBytes(long handle, byte[] bytes);
+	public native int writeBytes(int handle, byte[] bytes);
 
 
 

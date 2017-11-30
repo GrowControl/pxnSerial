@@ -18,22 +18,22 @@ public abstract class NativeD2xx implements DeviceNative {
 	public abstract byte[] getDeviceList();
 
 	@Override
-	public abstract long openPort(String portName);
+	public abstract int openPort(String portName);
 	@Override
-	public abstract boolean closePort(long handle);
+	public abstract boolean closePort(int handle);
 
 	@Override
-	public abstract long setParams(long handle, int baud, int byteSize, int stopBits, int parity, int flags);
+	public abstract int setParams(int handle, int baud, int byteSize, int stopBits, int parity, int flags);
 
 	@Override
-	public abstract boolean[] getLineStatus(long handle);
+	public abstract boolean[] getLineStatus(int handle);
 	@Override
-	public abstract long setLineStatus(long handle, boolean setRTS, boolean setDTR);
+	public abstract int setLineStatus(int handle, boolean setRTS, boolean setDTR);
 
 	@Override
-	public abstract int readBytes(long handle, byte[] bytes, int len);
+	public abstract int readBytes(int handle, byte[] bytes, int len);
 	@Override
-	public abstract long writeBytes(long handle, byte[] bytes);
+	public abstract int writeBytes(int handle, byte[] bytes);
 
 
 

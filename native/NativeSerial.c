@@ -68,12 +68,12 @@ Java_com_poixson_serial_natives_NativeSerial_getDeviceList
 
 
 // openPort(port-name)
-JNIEXPORT jlong JNICALL
+JNIEXPORT jint JNICALL
 Java_com_poixson_serial_natives_NativeSerial_openPort
 (JNIEnv *env, jobject obj, jstring portName) {
 	const char *port = (*env)->GetStringUTFChars(env, portName, 0);
 	fprintf(stderr, "Opening serial port: %s\n", port);
-	jlong handle = open(port, O_RDWR | O_NOCTTY | O_NDELAY);
+	jint handle = open(port, O_RDWR | O_NOCTTY | O_NDELAY);
 	if (handle <= 0) {
 		// permission denied
 		if (errno == EACCES) {
@@ -110,7 +110,7 @@ Java_com_poixson_serial_natives_NativeSerial_openPort
 // closePort(handle)
 JNIEXPORT jboolean JNICALL
 Java_com_poixson_serial_natives_NativeSerial_closePort
-(JNIEnv *env, jobject obj, jlong handle) {
+(JNIEnv *env, jobject obj, jint handle) {
 	if (handle <= 0) {
 		return JNI_FALSE;
 	}
@@ -130,9 +130,9 @@ Java_com_poixson_serial_natives_NativeSerial_closePort
 
 
 // setParams(handle, baud, byte-size, stop-bits, parity, flags)
-JNIEXPORT jlong JNICALL
+JNIEXPORT jint JNICALL
 Java_com_poixson_serial_natives_NativeSerial_setParams
-(JNIEnv *env, jobject obj, jlong handle, jint baud,
+(JNIEnv *env, jobject obj, jint handle, jint baud,
 jint byteSize, jint stopBits, jint parity, jint flags) {
 	if (handle <= 0) {
 		return handle;
@@ -246,7 +246,7 @@ jint byteSize, jint stopBits, jint parity, jint flags) {
 // getLineStatus(handle)
 JNIEXPORT jbooleanArray JNICALL
 Java_com_poixson_serial_natives_NativeSerial_getLineStatus
-(JNIEnv *env, jobject obj, jlong handle) {
+(JNIEnv *env, jobject obj, jint handle) {
 	if (handle <= 0) {
 		return NULL;
 	}
@@ -269,10 +269,10 @@ Java_com_poixson_serial_natives_NativeSerial_getLineStatus
 
 
 // setLineStatus(handle, rts, dtr)
-JNIEXPORT jlong JNICALL
+JNIEXPORT jint JNICALL
 Java_com_poixson_serial_natives_NativeSerial_setLineStatus
 (JNIEnv *env, jobject obj,
-jlong handle, jboolean setRTS, jboolean setDTR) {
+jint handle, jboolean setRTS, jboolean setDTR) {
 	if (handle <= 0) {
 		return handle;
 	}
@@ -325,7 +325,7 @@ jlong handle, jboolean setRTS, jboolean setDTR) {
 JNIEXPORT jint JNICALL
 Java_com_poixson_serial_natives_NativeSerial_readBytes
 (JNIEnv *env, jobject obj,
-jlong handle, jbyteArray bytes, jint len) {
+jint handle, jbyteArray bytes, jint len) {
 	if (handle <= 0) {
 		return handle;
 	}
@@ -351,9 +351,9 @@ jlong handle, jbyteArray bytes, jint len) {
 
 
 // writeBytes(handle, bytes)
-JNIEXPORT jlong JNICALL
+JNIEXPORT jint JNICALL
 Java_com_poixson_serial_natives_NativeSerial_writeBytes
-(JNIEnv *env, jobject obj, jlong handle, jbyteArray bytes) {
+(JNIEnv *env, jobject obj, jint handle, jbyteArray bytes) {
 	jbyte* buffer = (*env)->GetByteArrayElements(env, bytes, JNI_FALSE);
 	jint size = (*env)->GetArrayLength(env, bytes);
 	jint result =

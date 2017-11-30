@@ -10,16 +10,16 @@ public interface DeviceNative {
 	public void rescanDevices();
 	public byte[] getDeviceList();
 
-	public long openPort(String portName);
-	public boolean closePort(long handle);
+	public int openPort(String portName);
+	public boolean closePort(int handle);
 
-	public long setParams(long handle, int baud, int byteSize, int stopBits, int parity, int flags);
+	public int setParams(int handle, int baud, int byteSize, int stopBits, int parity, int flags);
 
-	public boolean[] getLineStatus(long handle);
-	public long setLineStatus(long handle, boolean setRTS, boolean setDTR);
+	public boolean[] getLineStatus(int handle);
+	public int setLineStatus(int handle, boolean setRTS, boolean setDTR);
 
-	public int readBytes(long handle, byte[] bytes, int len);
-	public long writeBytes(long handle, byte[] bytes);
+	public int readBytes(int handle, byte[] bytes, int len);
+	public int writeBytes(int handle, byte[] bytes);
 
 
 }

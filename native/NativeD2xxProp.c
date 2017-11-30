@@ -118,7 +118,7 @@ Java_com_poixson_serial_natives_NativeD2xxProp_getDeviceList
 
 
 // openPort(port-name)
-JNIEXPORT jlong JNICALL
+JNIEXPORT jint JNICALL
 Java_com_poixson_serial_natives_NativeD2xxProp_openPort
 (JNIEnv *env, jobject obj, jstring portName) {
 //TODO:
@@ -130,7 +130,7 @@ return 0;
 // closePort(handle)
 JNIEXPORT jboolean JNICALL
 Java_com_poixson_serial_natives_NativeD2xxProp_closePort
-(JNIEnv *env, jobject obj, jlong handle) {
+(JNIEnv *env, jobject obj, jint handle) {
 //TODO:
 return JNI_FALSE;
 }
@@ -142,9 +142,9 @@ return JNI_FALSE;
 
 
 // setParams(handle, baud, byte-size, stop-bits, parity, flags)
-JNIEXPORT jlong JNICALL
+JNIEXPORT jint JNICALL
 Java_com_poixson_serial_natives_NativeD2xxProp_setParams
-(JNIEnv *env, jobject obj, jlong handle, jint baud,
+(JNIEnv *env, jobject obj, jint handle, jint baud,
 jint byteSize, jint stopBits, jint parity, jint flags) {
 //TODO:
 return 0;
@@ -159,7 +159,7 @@ return 0;
 // getLineStatus(handle)
 JNIEXPORT jbooleanArray JNICALL
 Java_com_poixson_serial_natives_NativeD2xxProp_getLineStatus
-(JNIEnv *env, jobject obj, jlong handle) {
+(JNIEnv *env, jobject obj, jint handle) {
 //TODO:
 return NULL;
 }
@@ -167,10 +167,10 @@ return NULL;
 
 
 // setLineStatus(handle, rts, dtr)
-JNIEXPORT jlong JNICALL
+JNIEXPORT jint JNICALL
 Java_com_poixson_serial_natives_NativeD2xxProp_setLineStatus
 (JNIEnv *env, jobject obj,
-jlong handle, jboolean setRTS, jboolean setDTR) {
+jint handle, jboolean setRTS, jboolean setDTR) {
 //TODO:
 return 0;
 }
@@ -185,7 +185,7 @@ return 0;
 JNIEXPORT jint JNICALL
 Java_com_poixson_serial_natives_NativeD2xxProp_readBytes
 (JNIEnv *env, jobject obj,
-jlong handle, jbyteArray bytes, jint len) {
+jint handle, jbyteArray bytes, jint len) {
 //TODO:
 return 0;
 }
@@ -193,9 +193,9 @@ return 0;
 
 
 // writeBytes(handle, bytes)
-JNIEXPORT jlong JNICALL
+JNIEXPORT jint JNICALL
 Java_com_poixson_serial_natives_NativeD2xxProp_writeBytes
-(JNIEnv *env, jobject obj, jlong handle, jbyteArray bytes) {
+(JNIEnv *env, jobject obj, jint handle, jbyteArray bytes) {
 //TODO:
 return 0;
 }
