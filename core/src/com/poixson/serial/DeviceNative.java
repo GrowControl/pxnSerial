@@ -18,6 +18,9 @@ public interface DeviceNative {
 	public boolean[] getLineStatus(int handle);
 	public int setLineStatus(int handle, boolean setRTS, boolean setDTR);
 
+	public int available(int handle);
+	public int pending(int handle);
+
 	public int readBytes(int handle, byte[] bytes, int len);
 	public int writeBytes(int handle, byte[] bytes);
 

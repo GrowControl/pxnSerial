@@ -181,6 +181,26 @@ return 0;
 
 
 
+// available(handle)
+JNIEXPORT jint JNICALL
+Java_com_poixson_serial_natives_NativeD2xxProp_available
+(JNIEnv *env, jobject obj, jint handle) {
+//TODO:
+return 0;
+}
+
+
+
+// pending(handle)
+JNIEXPORT jint JNICALL
+Java_com_poixson_serial_natives_NativeD2xxProp_pending
+(JNIEnv *env, jobject obj, jint handle) {
+//TODO:
+return 0;
+}
+
+
+
 // readBytes(handle, bytes, length)
 JNIEXPORT jint JNICALL
 Java_com_poixson_serial_natives_NativeD2xxProp_readBytes

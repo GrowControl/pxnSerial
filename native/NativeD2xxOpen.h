@@ -80,6 +80,14 @@ jint handle, jboolean setRTS, jboolean setDTR);
 /* read/write */
 
 JNIEXPORT jint JNICALL
+Java_com_poixson_serial_natives_NativeD2xxOpen_available
+(JNIEnv *env, jobject obj, jint handle);
+
+JNIEXPORT jint JNICALL
+Java_com_poixson_serial_natives_NativeD2xxOpen_pending
+(JNIEnv *env, jobject obj, jint handle);
+
+JNIEXPORT jint JNICALL
 Java_com_poixson_serial_natives_NativeD2xxOpen_readBytes
 (JNIEnv *env, jobject obj,
 jint handle, jbyteArray bytes, jint len);

@@ -31,6 +31,11 @@ public class NativeSerial implements DeviceNative {
 	public native int setLineStatus(int handle, boolean setRTS, boolean setDTR);
 
 	@Override
+	public native int available(int handle);
+	@Override
+	public native int pending(int handle);
+
+	@Override
 	public native int readBytes(int handle, byte[] bytes, int len);
 	@Override
 	public native int writeBytes(int handle, byte[] bytes);

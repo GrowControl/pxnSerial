@@ -31,6 +31,11 @@ public abstract class NativeD2xx implements DeviceNative {
 	public abstract int setLineStatus(int handle, boolean setRTS, boolean setDTR);
 
 	@Override
+	public abstract int available(int handle);
+	@Override
+	public native int pending(int handle);
+
+	@Override
 	public abstract int readBytes(int handle, byte[] bytes, int len);
 	@Override
 	public abstract int writeBytes(int handle, byte[] bytes);

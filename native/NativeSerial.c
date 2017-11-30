@@ -321,6 +321,34 @@ jint handle, jboolean setRTS, jboolean setDTR) {
 
 
 
+// available(handle)
+JNIEXPORT jint JNICALL
+Java_com_poixson_serial_natives_NativeSerial_available
+(JNIEnv *env, jobject obj, jint handle) {
+	if (handle <= 0) {
+		return handle;
+	}
+	jint result = -1;
+	ioctl(handle, FIONREAD, &result);
+    return result;
+}
+
+
+
+// pending(handle)
+JNIEXPORT jint JNICALL
+Java_com_poixson_serial_natives_NativeSerial_pending
+(JNIEnv *env, jobject obj, jint handle) {
+	if (handle <= 0) {
+		return handle;
+	}
+	jint result = -1;
+	ioctl(handle, TIOCOUTQ, &result);
+    return result;
+}
+
+
+
 // readBytes(handle, bytes, length)
 JNIEXPORT jint JNICALL
 Java_com_poixson_serial_natives_NativeSerial_readBytes
