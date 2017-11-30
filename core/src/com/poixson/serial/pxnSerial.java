@@ -57,12 +57,14 @@ public class pxnSerial implements xCloseable {
 	@SuppressWarnings("resource")
 	public void open() throws IOException {
 		if ( ! this.stateLock.tryLock()) {
+			this.setErrorMsg("Already opening port");
 			throw new IOException("Already opening port "+this.getPortName());
 		}
 		try {
 			// check port state
 			switch (this.getState()) {
 			case OPEN:
+				this.setErrorMsg("Port already open");
 				throw new IOException("Port already open "+this.getPortName());
 			case ERROR:
 				Utils.safeClose(this);
@@ -80,7 +82,9 @@ public class pxnSerial implements xCloseable {
 				case ERROR:
 				case CLOSED:
 					this.handle = h;
-					final String errMsg = this.getErrorMsg();
+					final String errMsg =
+						this.nat.getErrorMsg(h);
+					this.setErrorMsg(errMsg);
 					throw new IOException(
 						(new StringBuilder())
 							.append("Failed to open port ")
@@ -112,6 +116,7 @@ public class pxnSerial implements xCloseable {
 				if (result <= 0) {
 					Utils.safeClose(this);
 					this.handle = result;
+					this.setErrorMsg("Failed to configure serial port");
 					throw new IOException(
 						(new StringBuilder())
 							.append("Failed to configure serial port: ")
@@ -133,6 +138,7 @@ public class pxnSerial implements xCloseable {
 				// failed to set line status
 				if (result <= 0) {
 					this.handle = result;
+					this.setErrorMsg("Failed to set serial line status");
 					throw new IOException(
 						(new StringBuilder())
 							.append("Failed to set serial line status: ")
