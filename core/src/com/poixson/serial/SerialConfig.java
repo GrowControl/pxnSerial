@@ -10,10 +10,10 @@ import com.poixson.utils.Utils;
 import com.poixson.utils.exceptions.RequiredArgumentException;
 
 
-public class SerialConfigDAO {
+public class SerialConfig {
 
-	public static final boolean DEFAULT_RTS = false;
-	public static final boolean DEFAULT_DTR = false;
+	public static final boolean DEFAULT_RTS   = false;
+	public static final boolean DEFAULT_DTR   = false;
 	public static final int     DEFAULT_FLAGS = 0;
 
 	public volatile String      portName = null;
@@ -30,7 +30,7 @@ public class SerialConfigDAO {
 
 
 
-	public SerialConfigDAO(final SerialConfigDAO cfg) {
+	public SerialConfig(final SerialConfig cfg) {
 		this(
 			cfg.portName,
 			cfg.baud,
@@ -43,20 +43,20 @@ public class SerialConfigDAO {
 			cfg.flags
 		);
 	}
-	public SerialConfigDAO(final String portName) {
+	public SerialConfig(final String portName) {
 		this(
 			portName,
 			null      // baud
 		);
 	}
-	public SerialConfigDAO(final String portName, final int baudInt) {
+	public SerialConfig(final String portName, final int baudInt) {
 		this(
 			portName,
 			Baud.FromInt(baudInt)
 		);
 		if (this.baud == null) throw new RuntimeException("Invalid baud rate: "+Integer.toString(baudInt));
 	}
-	public SerialConfigDAO(final String portName, final Baud baud) {
+	public SerialConfig(final String portName, final Baud baud) {
 		this(
 			portName,
 			baud,
@@ -69,7 +69,7 @@ public class SerialConfigDAO {
 			null  // flags
 		);
 	}
-	public SerialConfigDAO(
+	public SerialConfig(
 			final String portName, final Baud baud,
 			final DataBits byteSize, final StopBits stopBits,
 			final Parity parity, final FlowControl flowControl,
@@ -86,7 +86,7 @@ public class SerialConfigDAO {
 			( flags == null ? DEFAULT_FLAGS : flags.intValue()   )
 		);
 	}
-	public SerialConfigDAO(
+	public SerialConfig(
 			final String portName, final Baud baud,
 			final DataBits byteSize, final StopBits stopBits,
 			final Parity parity, final FlowControl flowControl,
@@ -102,23 +102,23 @@ public class SerialConfigDAO {
 		this.dtr      = dtr;
 		this.flags    = flags;
 	}
-	public SerialConfigDAO() {
+	public SerialConfig() {
 	}
 
 
 
 	@Override
-	public SerialConfigDAO clone() {
-		return new SerialConfigDAO(this);
+	public SerialConfig clone() {
+		return new SerialConfig(this);
 	}
-	public SerialConfigDAO cloneLocked() {
+	public SerialConfig cloneLocked() {
 		return this.clone().lock();
 	}
 
 
 
 	// lock
-	public SerialConfigDAO lock() {
+	public SerialConfig lock() {
 		this.locked = true;
 		return this;
 	}
@@ -135,7 +135,7 @@ public class SerialConfigDAO {
 			throw new RequiredArgumentException("portName");
 		return portName;
 	}
-	public SerialConfigDAO setPortName(final String portName) {
+	public SerialConfig setPortName(final String portName) {
 		if (this.isLocked()) throw new LockedSerialConfigException("portName");
 		this.portName = portName;
 		return this;
@@ -152,6 +152,11 @@ public class SerialConfigDAO {
 			: baud
 		);
 	}
+	public int getBaudValue() {
+		return
+			this.getBaud()
+				.getValue();
+	}
 	public int getBaudInt() {
 		return
 			this.getBaud()
@@ -162,14 +167,14 @@ public class SerialConfigDAO {
 			this.getBaud()
 				.toString();
 	}
-	public SerialConfigDAO setBaud(final int baudInt) {
+	public SerialConfig setBaud(final int baudInt) {
 		if (this.isLocked()) throw new LockedSerialConfigException("baud");
 		return
 			this.setBaud(
 				Baud.FromInt(baudInt)
 			);
 	}
-	public SerialConfigDAO setBaud(final Baud baud) {
+	public SerialConfig setBaud(final Baud baud) {
 		if (this.isLocked()) throw new LockedSerialConfigException("baud");
 		this.baud = baud;
 		return this;
@@ -191,14 +196,14 @@ public class SerialConfigDAO {
 			this.getByteSize()
 				.getValue();
 	}
-	public SerialConfigDAO setByteSize(final int byteSizeInt) {
+	public SerialConfig setByteSize(final int byteSizeInt) {
 		if (this.isLocked()) throw new LockedSerialConfigException("byteSize");
 		return
 			this.setByteSize(
 				DataBits.FromInt(byteSizeInt)
 			);
 	}
-	public SerialConfigDAO setByteSize(final DataBits byteSize) {
+	public SerialConfig setByteSize(final DataBits byteSize) {
 		if (this.isLocked()) throw new LockedSerialConfigException("byteSize");
 		this.byteSize = byteSize;
 		return this;
@@ -220,21 +225,21 @@ public class SerialConfigDAO {
 			this.getStopBits()
 				.getValue();
 	}
-	public SerialConfigDAO setStopBits(final double stopBitsDbl) {
+	public SerialConfig setStopBits(final double stopBitsDbl) {
 		if (this.isLocked()) throw new LockedSerialConfigException("stopBits");
 		return
 			this.setStopBits(
 				StopBits.FromDouble(stopBitsDbl)
 			);
 	}
-	public SerialConfigDAO setStopBits(final int stopBitsInt) {
+	public SerialConfig setStopBits(final int stopBitsInt) {
 		if (this.isLocked()) throw new LockedSerialConfigException("stopBits");
 		return
 			this.setStopBits(
 				StopBits.FromInt(stopBitsInt)
 			);
 	}
-	public SerialConfigDAO setStopBits(final StopBits stopBits) {
+	public SerialConfig setStopBits(final StopBits stopBits) {
 		if (this.isLocked()) throw new LockedSerialConfigException("stopBits");
 		this.stopBits = stopBits;
 		return this;
@@ -256,7 +261,7 @@ public class SerialConfigDAO {
 			this.getParity()
 				.getValue();
 	}
-	public SerialConfigDAO setParity(final Parity parity) {
+	public SerialConfig setParity(final Parity parity) {
 		if (this.isLocked()) throw new LockedSerialConfigException("parity");
 		this.parity = parity;
 		return this;
@@ -273,7 +278,7 @@ public class SerialConfigDAO {
 			: flow
 		);
 	}
-	public SerialConfigDAO setFlowControl(final FlowControl flow) {
+	public SerialConfig setFlowControl(final FlowControl flow) {
 		if (this.isLocked()) throw new LockedSerialConfigException("flowControl");
 		this.flow = flow;
 		return this;
@@ -290,14 +295,14 @@ public class SerialConfigDAO {
 			: rts.booleanValue()
 		);
 	}
-	public SerialConfigDAO setRTS(final boolean rts) {
+	public SerialConfig setRTS(final boolean rts) {
 		if (this.isLocked()) throw new LockedSerialConfigException("RTS");
 		return
 			this.setRTS(
 				Boolean.valueOf(rts)
 			);
 	}
-	public SerialConfigDAO setRTS(final Boolean rts) {
+	public SerialConfig setRTS(final Boolean rts) {
 		if (this.isLocked()) throw new LockedSerialConfigException("RTS");
 		this.rts = rts;
 		return this;
@@ -314,14 +319,14 @@ public class SerialConfigDAO {
 			: dtr.booleanValue()
 		);
 	}
-	public SerialConfigDAO setDTR(final boolean dtr) {
+	public SerialConfig setDTR(final boolean dtr) {
 		if (this.isLocked()) throw new LockedSerialConfigException("DTR");
 		return
 			this.setDTR(
 				Boolean.valueOf(dtr)
 			);
 	}
-	public SerialConfigDAO setDTR(final Boolean dtr) {
+	public SerialConfig setDTR(final Boolean dtr) {
 		if (this.isLocked()) throw new LockedSerialConfigException("DTR");
 		this.dtr = dtr;
 		return this;
@@ -338,24 +343,24 @@ public class SerialConfigDAO {
 		if (flags < 0) throw new IllegalArgumentException("Invalid flags value: "+Integer.toString(flags));
 		return flags;
 	}
-	public SerialConfigDAO setFlags(final int flags) {
+	public SerialConfig setFlags(final int flags) {
 		if (this.isLocked()) throw new LockedSerialConfigException("flags");
 		return
 			this.setFlags(
 				Integer.valueOf(flags)
 			);
 	}
-	public SerialConfigDAO setFlags(final Integer flags) {
+	public SerialConfig setFlags(final Integer flags) {
 		if (this.isLocked()) throw new LockedSerialConfigException("flags");
 		this.flags = flags;
 		return this;
 	}
-	public SerialConfigDAO setFlag(final int flag) {
+	public SerialConfig setFlag(final int flag) {
 		if (this.isLocked()) throw new LockedSerialConfigException("flags");
 		this.flags |= flag;
 		return this;
 	}
-	public SerialConfigDAO unsetFlag(final int flag) {
+	public SerialConfig unsetFlag(final int flag) {
 		if (this.isLocked()) throw new LockedSerialConfigException("flags");
 		this.flags &= ( ~flag );
 		return this;
