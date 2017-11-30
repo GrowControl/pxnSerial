@@ -13,6 +13,9 @@ public abstract class NativeD2xx implements DeviceNative {
 	public abstract int unload();
 
 	@Override
+	public abstract String getErrorMsg(final int handle);
+
+	@Override
 	public abstract void rescanDevices();
 	@Override
 	public abstract byte[] getDeviceList();

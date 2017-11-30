@@ -11,6 +11,11 @@ public class NativeD2xxOpen extends NativeD2xx {
 	public native int unload();
 
 	@Override
+	public String getErrorMsg(final int handle) {
+return null;
+	}
+
+	@Override
 	public native void rescanDevices();
 	@Override
 	public native byte[] getDeviceList();

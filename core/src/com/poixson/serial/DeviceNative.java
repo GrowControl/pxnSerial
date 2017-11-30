@@ -7,6 +7,8 @@ public interface DeviceNative {
 	public int init();
 	public int unload();
 
+	public String getErrorMsg(final int handle);
+
 	public void rescanDevices();
 	public byte[] getDeviceList();
 
