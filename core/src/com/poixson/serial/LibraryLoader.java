@@ -53,7 +53,7 @@ public class LibraryLoader {
 		// load libftdi.so (open)
 		if (this.useD2xxOpen) {
 			if (this.hasLoaded_D2xxOpen.compareAndSet(false, true)) {
-				if ( ! this.loader.Load("libftdi-open-linux64.so") ) {
+				if ( ! this.loader.load("libftdi-open-linux64.so") ) {
 					throw new RuntimeException("Failed to load libftdi open library!");
 				}
 				result = true;
@@ -62,14 +62,14 @@ public class LibraryLoader {
 		// load libftd2xx.so (prop)
 		if (this.useD2xxProp) {
 			if (this.hasLoaded_D2xxProp.compareAndSet(false, true)) {
-				if ( ! this.loader.Load("libftdi-prop-linux64.so") ) {
+				if ( ! this.loader.load("libftdi-prop-linux64.so") ) {
 					throw new RuntimeException("Failed to load ftd2xx official library!");
 				}
 				result = true;
 			}
 		}
 		// load pxnserial.so
-		if ( ! this.loader.Load("pxnserial-linux64.so") ) {
+		if ( ! this.loader.load("pxnserial-linux64.so") ) {
 			if (this.hasLoaded_pxnSerial.compareAndSet(false, true)) {
 				throw new RuntimeException("Failed to load pxnSerial native library!");
 			}
