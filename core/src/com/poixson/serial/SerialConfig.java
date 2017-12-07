@@ -98,9 +98,9 @@ public class SerialConfig {
 		this.stopBits = stopBits;
 		this.parity   = parity;
 		this.flow     = flowControl;
-		this.rts      = rts;
-		this.dtr      = dtr;
-		this.flags    = flags;
+		this.rts      = Boolean.valueOf(rts);
+		this.dtr      = Boolean.valueOf(dtr);
+		this.flags    = Integer.valueOf(flags);
 	}
 	public SerialConfig() {
 	}
@@ -131,8 +131,7 @@ public class SerialConfig {
 	// port name
 	public String getPortName() {
 		final String portName = this.portName;
-		if (Utils.isEmpty(portName))
-			throw new RequiredArgumentException("portName");
+		if (Utils.isEmpty(portName)) throw RequiredArgumentException.getNew("portName");
 		return portName;
 	}
 	public SerialConfig setPortName(final String portName) {
@@ -357,12 +356,16 @@ public class SerialConfig {
 	}
 	public SerialConfig setFlag(final int flag) {
 		if (this.isLocked()) throw new LockedSerialConfigException("flags");
-		this.flags |= flag;
+		this.flags = Integer.valueOf(
+			this.flags.intValue() | flag
+		);
 		return this;
 	}
 	public SerialConfig unsetFlag(final int flag) {
 		if (this.isLocked()) throw new LockedSerialConfigException("flags");
-		this.flags &= ( ~flag );
+		this.flags = Integer.valueOf(
+			this.flags.intValue() & (~flag)
+		);
 		return this;
 	}
 

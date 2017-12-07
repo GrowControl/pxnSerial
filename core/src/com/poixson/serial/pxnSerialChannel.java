@@ -38,8 +38,8 @@ public class pxnSerialChannel extends AbstractSelectableChannel implements SelCh
 		);
 	}
 	public static pxnSerialChannel open(final String portName, final Baud baud) throws IOException {
-		if (Utils.isEmpty(portName)) throw new RequiredArgumentException("portName");
-		if (baud == null)            throw new RequiredArgumentException("baud");
+		if (Utils.isEmpty(portName)) throw RequiredArgumentException.getNew("portName");
+		if (baud == null)            throw RequiredArgumentException.getNew("baud");
 		final SerialConfig cfg =
 			(new SerialConfig())
 				.setPortName(portName)
@@ -57,7 +57,7 @@ public class pxnSerialChannel extends AbstractSelectableChannel implements SelCh
 
 	protected pxnSerialChannel(final pxnSerial serial) throws IOException {
 		super(null);
-		if (serial == null) throw new RequiredArgumentException("serial");
+		if (serial == null) throw RequiredArgumentException.getNew("serial");
 		this.serial = serial;
 		// ensure port is open
 		if ( ! serial.isOpen()) {
