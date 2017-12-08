@@ -1,109 +1,91 @@
 package com.poixson.serial;
 
-import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 
 import com.poixson.utils.ErrorMode;
-import com.poixson.utils.Keeper;
 import com.poixson.utils.NativeAutoLoader;
 
 
-public class LibraryLoader {
+public class SerialLibraryLoader {
 
-	private static volatile LibraryLoader instance = null;
-	private static final Object instanceLock = new Object();
+	private static final AtomicReference<SerialLibraryLoader> instance =
+			new AtomicReference<SerialLibraryLoader>(null);
 
-	private final NativeAutoLoader loader;
-
-	private boolean useD2xxOpen = true;
-	private boolean useD2xxProp = true;
-
-	private final AtomicBoolean hasLoaded_D2xxOpen  = new AtomicBoolean(false);
-	private final AtomicBoolean hasLoaded_D2xxProp  = new AtomicBoolean(false);
-	private final AtomicBoolean hasLoaded_pxnSerial = new AtomicBoolean(false);
+	protected final NativeAutoLoader autoLoader;
 
 
 
-	public static LibraryLoader get() {
-		if (instance == null) {
-			synchronized (instanceLock) {
-				if (instance == null) {
-					instance = new LibraryLoader();
-					Keeper.add(instance);
-				}
-			}
+	public static SerialLibraryLoader get() {
+		{
+			final SerialLibraryLoader loader = instance.get();
+			if (loader != null)
+				return loader;
 		}
-		return instance;
-	}
-	private LibraryLoader() {
-		this.loader =
-			(new NativeAutoLoader())
-				.setErrorMode(ErrorMode.EXCEPTION)
-				.setClassRef(pxnSerial.class)
-				.addDefaultSearchPaths()
-				.setResourcesPath("lib/linux64/")
-				.setLocalLibPath("lib/")
-				.enableExtract()
-				.enableReplace();
-	}
-
-
-
-	public boolean Load() {
-		boolean result = false;
-		// load libftdi.so (open)
-		if (this.useD2xxOpen) {
-			if (this.hasLoaded_D2xxOpen.compareAndSet(false, true)) {
-				if ( ! this.loader.load("libftdi-open-linux64.so") ) {
-					throw new RuntimeException("Failed to load libftdi open library!");
-				}
-				result = true;
+		{
+			final SerialLibraryLoader loader = new SerialLibraryLoader();
+			if (!instance.compareAndSet(null, loader)) {
+				return instance.get();
 			}
+			return loader;
 		}
-		// load libftd2xx.so (prop)
-		if (this.useD2xxProp) {
-			if (this.hasLoaded_D2xxProp.compareAndSet(false, true)) {
-				if ( ! this.loader.load("libftdi-prop-linux64.so") ) {
-					throw new RuntimeException("Failed to load ftd2xx official library!");
-				}
-				result = true;
-			}
-		}
-		// load pxnserial.so
-		if ( ! this.loader.load("pxnserial-linux64.so") ) {
-			if (this.hasLoaded_pxnSerial.compareAndSet(false, true)) {
-				throw new RuntimeException("Failed to load pxnSerial native library!");
-			}
-			result = true;
-		}
-		return result;
+	}
+	protected SerialLibraryLoader() {
+		this.autoLoader = NativeAutoLoader.getNew()
+			.addDefaultSearchPaths()
+			.setLocalLibPath("lib")
+			.setResourcesPath("lib/linux64")
+			.enableExtract()
+			.enableReplace()
+			.setClassRef(SerialLibraryLoader.class)
+			.setErrorMode(ErrorMode.EXCEPTION);
 	}
 
 
 
-	// use open d2xx
-	public LibraryLoader useD2xxOpen() {
-		return this.useD2xxOpen(true);
-	}
-	public LibraryLoader noD2xxOpen() {
-		return this.useD2xxOpen(false);
-	}
-	public LibraryLoader useD2xxOpen(final boolean use) {
-		this.useD2xxOpen = use;
-		return this;
+	public NativeAutoLoader getAutoLoader() {
+		return this.autoLoader.clone();
 	}
 
 
 
-	// use prop d2xx
-	public LibraryLoader useD2xxProp() {
-		return this.useD2xxProp(true);
+	// load serial library
+	public void loadSerialLibrary() {
+		this.loadSerialLibrary(
+			this.getAutoLoader()
+		);
 	}
-	public LibraryLoader noD2xxProp() {
-		return this.useD2xxProp(false);
+	public void loadSerialLibrary(final NativeAutoLoader loader) {
+		loader
+			.setFileNameIfNull("pxnserial-linux64.so")
+			.load();
 	}
-	public LibraryLoader useD2xxProp(final boolean use) {
-		this.useD2xxProp = use;
-		return this;
+
+
+
+	// load ftdi open library
+	public void loadD2xxOpenLibrary() {
+		this.loadD2xxOpenLibrary(
+			this.getAutoLoader()
+		);
+	}
+	public void loadD2xxOpenLibrary(final NativeAutoLoader loader) {
+		this.getAutoLoader()
+			.setFileNameIfNull("libftdi-open-linux64.so")
+			.load();
+	}
+
+
+
+	// load ftdi prop library
+	public void loadD2xxPropLibrary() {
+		this.loadD2xxPropLibrary(
+			this.getAutoLoader()
+		);
+	}
+	public void loadD2xxPropLibrary(final NativeAutoLoader loader) {
+		this.getAutoLoader()
+			.setFileNameIfNull("libftdi-prop-linux64.so")
+			.load();
 	}
 
 
