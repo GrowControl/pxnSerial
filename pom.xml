@@ -33,6 +33,7 @@
 		<module>native</module>
 		<module>core</module>
 		<module>demo</module>
+		<module>nettet-serial</module>
 	</modules>
 	<build>
 		<defaultGoal>install</defaultGoal>
