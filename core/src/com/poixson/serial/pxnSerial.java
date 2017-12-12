@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.concurrent.locks.ReentrantLock;
 
 import com.poixson.serial.enums.SerialState;
-import com.poixson.serial.natives.NativeSerial;
 import com.poixson.utils.StringUtils;
 import com.poixson.utils.Utils;
 import com.poixson.utils.xCloseable;
@@ -31,16 +30,9 @@ public class pxnSerial implements xCloseable {
 
 
 	public pxnSerial(final SerialConfig cfg) {
-		this(
-			cfg,
-			new NativeSerial()
-		);
-	}
-	public pxnSerial(final SerialConfig cfg, final DeviceNative nat) {
 		if (cfg == null) throw RequiredArgumentException.getNew("cfg");
-		if (nat == null) throw RequiredArgumentException.getNew("nat");
 		this.cfg = cfg.clone().lock();
-		this.nat = nat;
+		this.nat = cfg.getNative();
 	}
 	public void finalize() {
 		Utils.safeClose(this);

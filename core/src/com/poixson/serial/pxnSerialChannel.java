@@ -45,8 +45,13 @@ public class pxnSerialChannel extends AbstractSelectableChannel implements SelCh
 				.setPortName(portName)
 				.setBaud(baud);
 		final pxnSerial serial =
-			new pxnSerial(cfg);
+			cfg.build();
 		return open(serial);
+	}
+	public static pxnSerialChannel open(final SerialConfig cfg) throws IOException {
+		return open(
+			cfg.build()
+		);
 	}
 	public static pxnSerialChannel open(final pxnSerial serial)
 			throws IOException {

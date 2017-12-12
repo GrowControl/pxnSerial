@@ -6,6 +6,7 @@ import com.poixson.serial.enums.FlowControl;
 import com.poixson.serial.enums.Parity;
 import com.poixson.serial.enums.StopBits;
 import com.poixson.serial.exceptions.LockedSerialConfigException;
+import com.poixson.serial.natives.NativeSerial;
 import com.poixson.utils.Utils;
 import com.poixson.utils.exceptions.RequiredArgumentException;
 
@@ -113,6 +114,19 @@ public class SerialConfig {
 	}
 	public SerialConfig cloneLocked() {
 		return this.clone().lock();
+	}
+
+
+
+	public pxnSerial build() {
+		return
+			new pxnSerial(
+				this
+			);
+	}
+	public DeviceNative getNative() {
+//TODO: enum or something
+return new NativeSerial();
 	}
 
 
