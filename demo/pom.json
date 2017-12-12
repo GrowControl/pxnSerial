@@ -16,13 +16,6 @@
 			"Version": "3.6.1",
 			"Scope": "compile"
 		},
-		"pxnNettet": {
-			"GroupId": "com.poixson.nettet",
-			"ArtifactId": "nettet",
-			"Name": "pxnNettet",
-			"Version": "1.0.0",
-			"Scope": "compile"
-		},
 		"pxnSerial": {
 			"GroupId": "com.poixson.serial",
 			"ArtifactId": "pxnserial",
