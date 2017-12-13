@@ -3,6 +3,7 @@ package com.poixson.serial;
 import java.io.IOException;
 import java.util.concurrent.locks.ReentrantLock;
 
+import com.poixson.serial.enums.Baud;
 import com.poixson.serial.enums.SerialState;
 import com.poixson.utils.StringUtils;
 import com.poixson.utils.Utils;
@@ -29,6 +30,17 @@ public class pxnSerial implements xCloseable {
 
 
 
+	public pxnSerial(final String portName, final int baudInt) {
+		this(
+			portName,
+			Baud.FromInt(baudInt)
+		);
+	}
+	public pxnSerial(final String portName, final Baud baud) {
+		this(
+			new SerialConfig(portName, baud)
+		);
+	}
 	public pxnSerial(final SerialConfig cfg) {
 		if (cfg == null) throw RequiredArgumentException.getNew("cfg");
 		this.cfg = cfg.clone().lock();

@@ -9,7 +9,6 @@ import java.nio.channels.SelectionKey;
 import java.nio.channels.spi.AbstractSelectableChannel;
 
 import com.poixson.serial.enums.Baud;
-import com.poixson.utils.Utils;
 import com.poixson.utils.exceptions.RequiredArgumentException;
 
 import sun.nio.ch.IOUtil;
@@ -29,38 +28,26 @@ public class pxnSerialChannel extends AbstractSelectableChannel implements SelCh
 
 
 
-	public static pxnSerialChannel open(final String portName, final int baudInt) throws IOException {
-		final Baud baud = Baud.FromInt(baudInt);
-		if (baud == null) throw new IllegalArgumentException("Invalid baud: "+Integer.toString(baudInt));
-		return open(
+	public pxnSerialChannel(final String portName, final int baudInt) throws IOException {
+		this(
 			portName,
-			baud
+			Baud.FromInt(baudInt)
 		);
 	}
-	public static pxnSerialChannel open(final String portName, final Baud baud) throws IOException {
-		if (Utils.isEmpty(portName)) throw RequiredArgumentException.getNew("portName");
-		if (baud == null)            throw RequiredArgumentException.getNew("baud");
-		final SerialConfig cfg =
-			(new SerialConfig())
-				.setPortName(portName)
-				.setBaud(baud);
-		final pxnSerial serial =
-			cfg.build();
-		return open(serial);
-	}
-	public static pxnSerialChannel open(final SerialConfig cfg) throws IOException {
-		return open(
-			cfg.build()
+	public pxnSerialChannel(final String portName, final Baud baud) throws IOException {
+		this(
+			new SerialConfig(
+				portName,
+				baud
+			)
 		);
 	}
-	public static pxnSerialChannel open(final pxnSerial serial)
-			throws IOException {
-		return new pxnSerialChannel(serial);
+	public pxnSerialChannel(final SerialConfig cfg) throws IOException {
+		this(
+			new pxnSerial(cfg)
+		);
 	}
-
-
-
-	protected pxnSerialChannel(final pxnSerial serial) throws IOException {
+	public pxnSerialChannel(final pxnSerial serial) throws IOException {
 		super(null);
 		if (serial == null) throw RequiredArgumentException.getNew("serial");
 		this.serial = serial;

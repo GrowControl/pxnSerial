@@ -105,15 +105,9 @@ public class SerialConfig {
 	}
 	public SerialConfig() {
 	}
-
-
-
 	@Override
 	public SerialConfig clone() {
 		return new SerialConfig(this);
-	}
-	public SerialConfig cloneLocked() {
-		return this.clone().lock();
 	}
 
 
