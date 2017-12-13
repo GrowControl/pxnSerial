@@ -1,11 +1,8 @@
 package com.poixson.serial.demo;
 
-import com.poixson.nettet.tool.Main;
-import com.poixson.serial.SerialLibraryLoader;
-import com.poixson.utils.ErrorMode;
 import com.poixson.utils.Keeper;
 import com.poixson.utils.NativeAutoLoader;
-import com.poixson.utils.ShellArgsTool;
+import com.poixson.utils.NativeAutoLoader.AutoMode;
 
 
 public class Main {
@@ -22,14 +19,20 @@ public class Main {
 //		final ShellArgsTool argsTool = ShellArgsTool.Init(argsArray);
 		// load libraries
 		{
-			final SerialLibraryLoader loader =
-				SerialLibraryLoader.get();
-			// load serial library
-			loader.loadSerialLibrary();
-			// load d2xx open library
-			loader.loadD2xxOpenLibrary();
-			// load d2xx prop library
-			loader.loadD2xxPropLibrary();
+			final NativeAutoLoader loader =
+					NativeAutoLoader.getNew(AutoMode.AUTO_MODE_SELF_CONTAINED)
+						.setDefaults(Main.class)
+						.setLocalLibPath("lib")
+						.setResourcesPath("lib/linux64");
+				// load d2xx open library
+				loader.clone()
+					.load("libftdi-open-linux64.so");
+				// load d2xx prop library
+				loader.clone()
+					.load("libftdi-prop-linux64.so");
+				// load serial library
+				loader.clone()
+					.load("pxnserial-linux64.so");
 		}
 	}
 
