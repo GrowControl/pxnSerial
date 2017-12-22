@@ -17,6 +17,7 @@ import sun.nio.ch.SelChImpl;
 import sun.nio.ch.SelectionKeyImpl;
 
 
+//for use with nio Selector
 public class pxnSerialChannel extends AbstractSelectableChannel implements SelChImpl {
 
 	private static final int VALID_OPS = (OP_READ | OP_WRITE);

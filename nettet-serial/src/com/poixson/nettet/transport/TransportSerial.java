@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import com.poixson.nettet.transports.TransportClient;
 import com.poixson.serial.pxnSerial;
-import com.poixson.utils.xCloseable;
 
 
 public class TransportSerial extends TransportClient {
@@ -19,20 +18,30 @@ public class TransportSerial extends TransportClient {
 
 
 
-	public void Open() {
+	@Override
+	public void connect() throws IOException {
+		this.serial
+			.open();
 	}
-
-
-
 	@Override
 	public void close() throws IOException {
+		this.serial
+			.close();
 	}
 
 
 
 	@Override
+	public boolean isConnected() {
+		return
+			this.serial
+				.isOpen();
+	}
+	@Override
 	public boolean isClosed() {
-return false;
+		return
+			this.serial
+				.isClosed();
 	}
 
 
