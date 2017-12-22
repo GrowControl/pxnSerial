@@ -2,12 +2,12 @@ package com.poixson.nettet.transport;
 
 import java.io.IOException;
 
-import com.poixson.nettet.transports.Transport;
+import com.poixson.nettet.transports.TransportClient;
 import com.poixson.serial.pxnSerial;
 import com.poixson.utils.xCloseable;
 
 
-public class TransportSerial implements Transport, xCloseable {
+public class TransportSerial extends TransportClient {
 
 	protected final pxnSerial serial;
 
