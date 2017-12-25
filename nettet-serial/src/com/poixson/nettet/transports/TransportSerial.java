@@ -1,8 +1,7 @@
-package com.poixson.nettet.transport;
+package com.poixson.nettet.transports;
 
 import java.io.IOException;
 
-import com.poixson.nettet.transports.TransportClient;
 import com.poixson.serial.pxnSerial;
 
 
