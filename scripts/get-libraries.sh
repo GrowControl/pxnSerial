@@ -213,29 +213,35 @@ function CopyPropLibs() {
 
 
 # parse arguments
-while [[ $# -ge 1 ]]; do
-	case "$1" in
-		clean|clear|-c|--clean)
-			DO_CLEAN=1
-		;;
-		all|-a|--all)
-			DO_CLEAN=1
-			DO_GET_OPEN=1
-			DO_GET_PROP=1
-		;;
-		open|-o|--open)
-			DO_GET_OPEN=1
-		;;
-		prop|official|-p|--prop)
-			DO_GET_PROP=1
-		;;
+if [[ $# -eq 0 ]]; then
+	DO_CLEAN=1
+	DO_GET_OPEN=1
+	DO_GET_PROP=1
+else
+	while [[ $# -ge 1 ]]; do
+		case "$1" in
+			clean|clear|-c|--clean)
+				DO_CLEAN=1
+			;;
+			all|-a|--all)
+				DO_CLEAN=1
+				DO_GET_OPEN=1
+				DO_GET_PROP=1
+			;;
+			open|-o|--open)
+				DO_GET_OPEN=1
+			;;
+			prop|official|-p|--prop)
+				DO_GET_PROP=1
+			;;
 		*)
-			echo -ne "\n\nUnknown argument: $1\n\n"
-			exit 1
-		;;
-	esac
-	shift
-done
+				echo -ne "\n\nUnknown argument: $1\n\n"
+					exit 1
+			;;
+		esac
+		shift
+	done
+fi
 
 if [[ ! -z $DO_CLEAN ]]; then
 	doClean
