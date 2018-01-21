@@ -50,7 +50,7 @@ public class pxnSerialChannel extends AbstractSelectableChannel implements SelCh
 	}
 	public pxnSerialChannel(final pxnSerial serial) throws IOException {
 		super(null);
-		if (serial == null) throw RequiredArgumentException.getNew("serial");
+		if (serial == null) throw new RequiredArgumentException("serial");
 		this.serial = serial;
 		// ensure port is open
 		if ( ! serial.isOpen()) {

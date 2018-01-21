@@ -139,7 +139,7 @@ return new NativeSerial();
 	// port name
 	public String getPortName() {
 		final String portName = this.portName;
-		if (Utils.isEmpty(portName)) throw RequiredArgumentException.getNew("portName");
+		if (Utils.isEmpty(portName)) throw new RequiredArgumentException("portName");
 		return portName;
 	}
 	public SerialConfig setPortName(final String portName) {

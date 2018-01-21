@@ -42,7 +42,7 @@ public class pxnSerial implements xCloseable {
 		);
 	}
 	public pxnSerial(final SerialConfig cfg) {
-		if (cfg == null) throw RequiredArgumentException.getNew("cfg");
+		if (cfg == null) throw new RequiredArgumentException("cfg");
 		this.cfg = cfg.clone().lock();
 		this.nat = cfg.getNative();
 	}

@@ -14,7 +14,7 @@ public class SerialInputStream extends InputStream {
 
 
 	public SerialInputStream(final pxnSerial serial) {
-		if (serial == null) throw RequiredArgumentException.getNew("serial");
+		if (serial == null) throw new RequiredArgumentException("serial");
 		this.serial = serial;
 	}
 
